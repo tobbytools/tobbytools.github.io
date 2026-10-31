@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Core Web Vitals Checker – Check LCP, INP &amp; CLS | Tobby Tools</title>
+<meta name="description" content="Free Core Web Vitals checker: paste a URL to check LCP, INP and CLS from real Chrome users (CrUX), your Lighthouse performance score, and key SEO checks like canonical and noindex. No sign-up.">
+<link rel="canonical" href="https://tobbytools.github.io/">
+<meta name="theme-color" content="#0f2a6b">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://www.googleapis.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tobby Tools">
+<meta property="og:title" content="Free Core Web Vitals Checker – Check LCP, INP & CLS">
+<meta property="og:description" content="Check any page's real-user LCP, INP and CLS, Lighthouse score and SEO basics in one click. Free, no sign-up.">
+<meta property="og:url" content="https://tobbytools.github.io/">
+<meta property="og:image" content="https://tobbytools.github.io/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Free Core Web Vitals Checker by Tobby Tools">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--brand:#0f2a6b;--acc:#1d4ed8;--good:#0a7d38;--ni:#b45309;--poor:#c5221f;--goodbg:#e6f4ea;--nibg:#fef3e2;--poorbg:#fce8e6}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header.top{background:var(--brand);color:#fff}
+header.top .wrap{display:flex;align-items:center;gap:10px;height:56px}
+header.top a{color:#fff;text-decoration:none;font-weight:700}
+.hero{background:linear-gradient(180deg,var(--brand),#1e3a8a);color:#fff;padding:36px 0 56px}
+h1{font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.15;margin:0 0 10px}
+.hero p{color:#dbe4ff;margin:0 0 22px;max-width:640px}
+form.check{display:flex;gap:10px;flex-wrap:wrap}
+form.check input{flex:1 1 320px;min-width:0;font-size:1.05rem;padding:14px 16px;border-radius:10px;border:2px solid transparent}
+form.check input:focus{outline:3px solid #fbbf24;outline-offset:1px}
+button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:10px;padding:14px 22px;background:#fbbf24;color:#111}
+button:hover{background:#f59e0b}button:disabled{opacity:.6;cursor:wait}
+.hint{font-size:.85rem;color:#c7d2fe;margin-top:10px}
+main{margin-top:-30px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.card h2{font-size:1.25rem;margin:0 0 4px}
+.sub{color:var(--mut);font-size:.92rem;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.metric{border:1px solid var(--line);border-radius:12px;padding:14px;border-top:5px solid #94a3b8}
+.metric.good{border-top-color:var(--good)}.metric.ni{border-top-color:var(--ni)}.metric.poor{border-top-color:var(--poor)}
+.metric .name{font-weight:700;font-size:.95rem}.metric .name small{font-weight:400;color:var(--mut)}
+.metric .val{font-size:2rem;font-weight:800;line-height:1.2;margin:4px 0}
+.good .val,.t-good{color:var(--good)}.ni .val,.t-ni{color:var(--ni)}.poor .val,.t-poor{color:var(--poor)}
+.bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:8px 0 4px;background:#eee}
+.bar span:nth-child(1){background:var(--good)}.bar span:nth-child(2){background:#f59e0b}.bar span:nth-child(3){background:var(--poor)}
+.dist{font-size:.78rem;color:var(--mut)}
+.pill{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 10px;border-radius:99px}
+.pill.good{background:var(--goodbg);color:var(--good)}.pill.ni{background:var(--nibg);color:var(--ni)}.pill.poor{background:var(--poorbg);color:var(--poor)}.pill.na{background:#eef2f7;color:var(--mut)}
+.verdict{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.note{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 14px;font-size:.92rem}
+.warn{background:var(--nibg);border-color:#fcd34d}
+.err{background:var(--poorbg);border:1px solid #f5b5b0;border-radius:10px;padding:14px}
+.score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.gauge{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;font-size:2rem;font-weight:800;flex:none}
+.labs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;flex:1}
+.labs div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.85rem}.labs b{display:block;font-size:1.1rem}
+ul.checks{list-style:none;padding:0;margin:0}
+ul.checks li{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+ul.checks li:first-child{border-top:0}
+.ico{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:.85rem}
+.ico.pass{background:var(--good)}.ico.fail{background:var(--poor)}.ico.na{background:#94a3b8}
+.checks .d{color:var(--mut);font-size:.88rem}
+.progress{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin:12px 0}
+.progress span{display:block;height:100%;width:0;background:var(--acc);transition:width .9s linear}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.prod{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column}
+.prod h3{margin:0 0 6px;font-size:1.05rem}.prod p{margin:0 0 12px;color:var(--mut);font-size:.92rem;flex:1}
+.btn{display:inline-block;text-align:center;font-weight:700;text-decoration:none;padding:10px 16px;border-radius:9px;background:var(--brand);color:#fff}
+.btn:hover{background:var(--acc)}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tools a{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.tools a span{display:block;color:var(--mut);font-size:.88rem}
+.tools a:hover{border-color:var(--acc)}
+article h2{font-size:1.45rem;margin:28px 0 8px}article h3{font-size:1.1rem;margin:20px 0 4px}
+table{width:100%;border-collapse:collapse;font-size:.93rem}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+details{border-top:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:700}
+footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.key{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}.key input{flex:1 1 260px;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit}
+.key button{padding:10px 16px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><img src="/logo-64.png" width="32" height="32" alt=""><a href="/">Tobby Tools</a></div></header>
+<section class="hero"><div class="wrap">
+<h1>Free Core Web Vitals Checker</h1>
+<p>Check LCP, INP and CLS from real Chrome users, plus your Lighthouse performance score and the SEO basics that stop pages ranking (canonical, noindex, titles). Free, no sign-up.</p>
+<form class="check" id="f" novalidate>
+<label for="u" class="sr">Page URL to check</label>
+<input id="u" name="url" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com/page" required>
+<button id="go" type="submit">Check page</button>
+</form>
+<p class="hint">Uses Google's PageSpeed Insights API (mobile). A test usually takes 20–60 seconds.</p>
+</div></section>
+
+<main class="wrap">
+<div id="status" class="card" hidden aria-live="polite"></div>
+<div id="results" hidden>
+ <section class="card" aria-labelledby="h-field"><h2 id="h-field">Core Web Vitals (real users)</h2>
+  <p class="sub" id="field-sub"></p><div id="field"></div></section>
+ <section class="card" aria-labelledby="h-lab"><h2 id="h-lab">Lighthouse lab test (mobile)</h2>
+  <p class="sub">A single simulated load on a mid-range phone with throttled network. Good for debugging; Google ranks on the real-user data above.</p><div id="lab"></div></section>
+ <section class="card" aria-labelledby="h-seo"><h2 id="h-seo">SEO checks</h2>
+  <p class="sub">From Lighthouse's SEO audits for this URL.</p><ul class="checks" id="seo"></ul></section>
+ <section class="card" aria-labelledby="h-fix"><h2 id="h-fix">Fix what this found</h2>
+  <p class="sub">Two tools from us for going from "it failed" to a fixed site.</p>
+  <div class="products">
+   <div class="prod"><h3>Technical SEO + Core Web Vitals Checklist</h3><p>191 checks across 19 categories, as a spreadsheet plus a 17-page PDF. Pay what you want, from $5.</p><a class="btn" href="https://tobbytools.gumroad.com/l/crbfld">Get the checklist – $5+</a></div>
+   <div class="prod"><h3>CWV Audit Kit (Google Sheets)</h3><p>Paste your URLs into a Google Sheet and click Run. It pulls PageSpeed lab and CrUX real-user data, tracks a 25-week field trend, and includes the 191-check checklist, fix tickets, a 21-page fix playbook and a client report template.</p><a class="btn" href="https://tobbytools.gumroad.com/l/kzrcvu">Get the audit kit – $29</a></div>
+  </div></section>
+</div>
+
+<section class="card" aria-labelledby="h-more"><h2 id="h-more">More tools</h2>
+<div class="tools">
+<a href="https://apify.com/tobbyb/pagespeed-core-web-vitals-monitor"><strong>Bulk Core Web Vitals checker</strong><span>Check hundreds of URLs or a whole sitemap on Apify.</span></a>
+<a href="https://apify.com/tobbyb/website-screenshot"><strong>Website screenshot</strong><span>Capture screenshots of any web page on Apify.</span></a>
+<a href="https://apify.com/tobbyb/document-to-markdown-converter"><strong>Document to Markdown</strong><span>Convert documents to clean Markdown on Apify.</span></a>
+</div></section>
+
+<article class="card">
+<h2>What are Core Web Vitals?</h2>
+<p>Core Web Vitals are the three metrics Google uses to measure real-world page experience: loading, responsiveness and visual stability. Google assesses each at the <strong>75th percentile</strong> of page loads, split by mobile and desktop, and a page passes when all three are "good" (<a href="https://web.dev/articles/vitals">web.dev</a>).</p>
+<table><caption class="sr">Core Web Vitals thresholds</caption>
+<thead><tr><th scope="col">Metric</th><th scope="col">Measures</th><th scope="col" class="t-good">Good</th><th scope="col" class="t-ni">Needs improvement</th><th scope="col" class="t-poor">Poor</th></tr></thead>
+<tbody>
+<tr><td><strong>LCP</strong></td><td>Loading</td><td>≤ 2.5 s</td><td>2.5 – 4 s</td><td>&gt; 4 s</td></tr>
+<tr><td><strong>INP</strong></td><td>Responsiveness</td><td>≤ 200 ms</td><td>200 – 500 ms</td><td>&gt; 500 ms</td></tr>
+<tr><td><strong>CLS</strong></td><td>Visual stability</td><td>≤ 0.1</td><td>0.1 – 0.25</td><td>&gt; 0.25</td></tr>
+</tbody></table>
+<h3>Largest Contentful Paint (LCP)</h3>
+<p>The time until the largest image or text block in the viewport is rendered. Aim for 2.5 seconds or less (<a href="https://web.dev/articles/lcp">web.dev/lcp</a>).</p>
+<h3>Interaction to Next Paint (INP)</h3>
+<p>How quickly the page visibly responds to clicks, taps and key presses, across the whole visit. INP replaced First Input Delay as a Core Web Vital in March 2024. Aim for 200 ms or less (<a href="https://web.dev/articles/inp">web.dev/inp</a>).</p>
+<h3>Cumulative Layout Shift (CLS)</h3>
+<p>How much visible content moves around unexpectedly while the page is open. Aim for 0.1 or less (<a href="https://web.dev/articles/cls">web.dev/cls</a>).</p>
+<h2>Field data vs lab data</h2>
+<p><strong>Field data</strong> comes from real Chrome users through the Chrome UX Report (CrUX), aggregated over the previous 28 days. It is what Google's page experience signals use. <strong>Lab data</strong> (Lighthouse) is one simulated load in a controlled environment: reproducible and great for debugging, but it can differ from what users actually experience, and it cannot measure INP directly because nobody interacts with the page (<a href="https://web.dev/articles/lab-and-field-data-differences">web.dev</a>).</p>
+<p>When a URL has too little traffic for CrUX, this checker shows the whole origin's (domain's) field data instead, and says so. Small or new sites may have no field data at all; then use the lab result and Total Blocking Time as a proxy for responsiveness.</p>
+
+<h2>FAQ</h2>
+<details><summary>Is this Core Web Vitals checker free?</summary><p>Yes. No sign-up, no account, no tracking cookies. It calls Google's public PageSpeed Insights API from your browser.</p></details>
+<details><summary>Why does it say "not enough real-user data"?</summary><p>CrUX only publishes data for pages and origins with enough Chrome traffic. If neither the URL nor its origin qualifies, there is no field data; the Lighthouse lab result is still shown.</p></details>
+<details><summary>Why is my lab score different from my field data?</summary><p>Lighthouse runs one throttled mobile load from a Google data centre. Real users have different devices, networks and cached files, so the numbers often differ. For rankings, field data is what counts.</p></details>
+<details><summary>How long until fixes show up?</summary><p>Lab results change immediately. CrUX field data is a rolling 28-day window, so improvements show gradually over about four weeks.</p></details>
+<details><summary>What do the canonical and noindex checks mean?</summary><p>The canonical check confirms the page declares a valid preferred URL with <code>rel=canonical</code>. The indexing check confirms no <code>noindex</code> meta tag, X-Robots-Tag header or robots.txt rule is blocking the page from search results.</p></details>
+<details><summary>I see a "rate limit" error. What now?</summary><p>Google limits how many free PageSpeed tests can run. Wait a minute and try again, or paste your own free PageSpeed Insights API key when prompted; it is kept only in your browser.</p></details>
+</article>
+</main>
+<footer><div class="wrap">© 2026 Tobby Tools, Toronto. Data from Google PageSpeed Insights and the Chrome UX Report. This site sets no cookies. · <a href="https://tobbytools.gumroad.com/">Gumroad store</a></div></footer>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","name":"Free Core Web Vitals Checker","url":"https://tobbytools.github.io/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Tobby Tools"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is this Core Web Vitals checker free?","acceptedAnswer":{"@type":"Answer","text":"Yes. No sign-up, no account, no tracking cookies. It calls Google's public PageSpeed Insights API from your browser."}},
+{"@type":"Question","name":"Why does it say \"not enough real-user data\"?","acceptedAnswer":{"@type":"Answer","text":"CrUX only publishes data for pages and origins with enough Chrome traffic. If neither the URL nor its origin qualifies, there is no field data; the Lighthouse lab result is still shown."}},
+{"@type":"Question","name":"Why is my lab score different from my field data?","acceptedAnswer":{"@type":"Answer","text":"Lighthouse runs one throttled mobile load from a Google data centre. Real users have different devices, networks and cached files, so the numbers often differ. For rankings, field data is what counts."}},
+{"@type":"Question","name":"How long until fixes show up?","acceptedAnswer":{"@type":"Answer","text":"Lab results change immediately. CrUX field data is a rolling 28-day window, so improvements show gradually over about four weeks."}},
+{"@type":"Question","name":"What do the canonical and noindex checks mean?","acceptedAnswer":{"@type":"Answer","text":"The canonical check confirms the page declares a valid preferred URL with rel=canonical. The indexing check confirms no noindex meta tag, X-Robots-Tag header or robots.txt rule is blocking the page from search results."}},
+{"@type":"Question","name":"I see a \"rate limit\" error. What now?","acceptedAnswer":{"@type":"Answer","text":"Google limits how many free PageSpeed tests can run. Wait a minute and try again, or paste your own free PageSpeed Insights API key when prompted; it is kept only in your browser."}}
+]}]}
+</script>
+<script src="/app.js" defer></script>
+</body>
+</html>

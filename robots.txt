@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tobbytools.github.io/sitemap.xml
