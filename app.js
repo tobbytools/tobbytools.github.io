@@ -1,5 +1,6 @@
 (()=>{
 const $=id=>document.getElementById(id);
+const DEFAULT_KEY='AIzaSyAfy9rdbRB5pow4PW9WxHVLS93ys1sLQLk';
 const API='https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
 const T={LCP:[2500,4000],INP:[200,500],CLS:[0.1,0.25]};
 const M={LCP:'LARGEST_CONTENTFUL_PAINT_MS',INP:'INTERACTION_TO_NEXT_PAINT',CLS:'CUMULATIVE_LAYOUT_SHIFT_SCORE'};
@@ -22,7 +23,7 @@ async function run(url){
  timer=setInterval(()=>{const s=(Date.now()-t0)/1000;const p=Math.min(95,100*(1-Math.exp(-s/22)));const pb=$('pb');if(pb)pb.style.width=p+'%';
   const st=steps.filter(x=>s>=x[0]).pop();const pt=$('pt');if(pt)pt.textContent=st[1]+' ('+Math.round(s)+'s)'},1000);
  const q=new URLSearchParams({url,strategy:'mobile'});q.append('category','performance');q.append('category','seo');
- const k=getKey();if(k)q.set('key',k);
+ const k=getKey()||DEFAULT_KEY;if(k)q.set('key',k);
  const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),120000);
  try{
   const r=await fetch(API+'?'+q,{signal:ctl.signal});let d={};try{d=await r.json()}catch(e){}
