@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Core Web Vitals Audit Kit for Google Sheets – Live PageSpeed + CrUX Audits | Tobby Tools</title>
+<meta name="description" content="A Google Sheets kit that audits Core Web Vitals and technical SEO: live PageSpeed (Lighthouse) and real-user CrUX data for every URL, a 191-check checklist, fix tickets, a client report and a 21-page fix playbook. $29, one-time.">
+<link rel="canonical" href="https://tobbytools.github.io/core-web-vitals-audit-kit/">
+<meta name="theme-color" content="#0f2a6b">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Tobby Tools">
+<meta property="og:title" content="Core Web Vitals Audit Kit for Google Sheets">
+<meta property="og:description" content="Paste your URLs, click Run: live PageSpeed and real-user Core Web Vitals for every page, what fails, how to fix it, and a client-ready report.">
+<meta property="og:url" content="https://tobbytools.github.io/core-web-vitals-audit-kit/">
+<meta property="og:image" content="https://tobbytools.github.io/core-web-vitals-audit-kit/img/og.jpg">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="720">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--brand:#0f2a6b;--acc:#1d4ed8}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--acc)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+header.top{background:var(--brand);color:#fff}
+header.top .wrap{display:flex;align-items:center;gap:10px;height:56px}
+header.top a{color:#fff;text-decoration:none;font-weight:700}
+header.top nav{margin-left:auto;display:flex;gap:16px}header.top nav a{font-weight:500;font-size:.95rem}
+.hero{background:linear-gradient(180deg,var(--brand),#1e3a8a);color:#fff;padding:40px 0 60px}
+.hero .cols{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+@media(max-width:820px){.hero .cols{grid-template-columns:1fr}}
+h1{font-size:clamp(1.8rem,4.2vw,2.5rem);line-height:1.15;margin:0 0 12px}
+.hero p{color:#dbe4ff;margin:0 0 22px}
+.hero img{width:100%;height:auto;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.cta{display:inline-block;font-weight:800;text-decoration:none;padding:14px 24px;border-radius:10px;background:#fbbf24;color:#111}
+.cta:hover{background:#f59e0b}
+.small{font-size:.88rem;color:#c7d2fe;margin-top:10px}
+main{margin-top:-28px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.card h2{font-size:1.4rem;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+figure{margin:0}figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:10px}
+figcaption{font-size:.88rem;color:var(--mut);margin-top:6px}
+ol li,ul li{margin-bottom:6px}
+details{border-top:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:700}
+.price{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.price .amt{font-size:2.2rem;font-weight:800}
+.price .cta{background:var(--brand);color:#fff}.price .cta:hover{background:var(--acc)}
+footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><img src="/logo-64.png" width="32" height="32" alt=""><a href="/">Tobby Tools</a><nav><a href="/">Free CWV checker</a><a href="#pricing">Pricing</a></nav></div></header>
+<section class="hero"><div class="wrap cols">
+<div>
+<h1>Core Web Vitals Audit Kit for Google Sheets</h1>
+<p>Audit Core Web Vitals and technical SEO in about 15 minutes, inside Google Sheets. Paste your URLs and click Run: the sheet pulls Lighthouse lab results and real-user Chrome data (LCP, INP, CLS) for every page, flags what fails, and gives you the fix plus a client-ready report.</p>
+<a class="cta" href="https://tobbytools.gumroad.com/l/kzrcvu">Get the kit – $29</a>
+<p class="small">One-time payment, no subscription. Uses your own free Google API key. 30-day refund.</p>
+</div>
+<img src="img/cover.webp" width="1280" height="720" alt="Core Web Vitals Audit Kit: Google Sheets workbook with live PageSpeed and CrUX results">
+</div></section>
+
+<main class="wrap">
+<section class="card"><h2>The problem</h2>
+<p>Google assesses Core Web Vitals from <strong>real Chrome users</strong>, not from the Lighthouse score you see in your browser. Most audits stop at a static checklist, so you're left guessing which pages actually fail, why, and what to fix first. This kit puts lab data, real-user field data, a full checklist and a prioritised fix list in one sheet.</p>
+</section>
+
+<section class="card"><h2>What you get</h2>
+<ul>
+<li><strong>Google Sheets audit workbook:</strong> 11 tabs that open as a normal Sheet. No add-on to install and no subscription.</li>
+<li><strong>One-click live audits:</strong> an Apps Script menu calls the PageSpeed Insights API (Lighthouse lab data) and the Chrome UX Report API (real-user p75 field data) for every URL, on mobile and desktop.</li>
+<li><strong>25-week real-user trend</strong> from the CrUX History API, with a better or worse call for each metric.</li>
+<li><strong>191-check technical SEO and Core Web Vitals checklist</strong> covering crawling, indexing, canonicals, structured data, mobile, international, security, LCP, INP and CLS. Each check has a severity, effort, why it matters, how to test it and a source link.</li>
+<li><strong>Issues and fix tickets:</strong> a priority score (impact × reach ÷ effort) and developer-ready tickets you can paste into Jira or Linear.</li>
+<li><strong>Client report generator:</strong> one click fills a Google Doc template with the sheet's numbers: summary, scorecard, top 5 issues, before and after, and a 30/60/90-day plan.</li>
+<li><strong>21-page Fix Playbook (PDF):</strong> how to fix LCP, INP, CLS, TTFB and common Lighthouse findings, with a source link behind every claim.</li>
+</ul>
+</section>
+
+<section class="card"><h2>See inside</h2>
+<div class="grid">
+<figure><img src="img/cwv-live.webp" width="1200" height="927" loading="lazy" alt="CWV Live tab with pass and fail results per URL"><figcaption>CWV Live: lab and real-user results for every URL, mobile and desktop.</figcaption></figure>
+<figure><img src="img/field-trend.webp" width="1200" height="927" loading="lazy" alt="25-week field data trend tab"><figcaption>Field Trend: 25 weeks of real-user data from the CrUX History API.</figcaption></figure>
+<figure><img src="img/checklist.webp" width="1200" height="927" loading="lazy" alt="191-check technical SEO checklist tab"><figcaption>The 191-check technical SEO and CWV checklist.</figcaption></figure>
+<figure><img src="img/fix-tickets.webp" width="1200" height="927" loading="lazy" alt="Issues and fix tickets tab"><figcaption>Issues and fix tickets, ranked by priority score.</figcaption></figure>
+<figure><img src="img/client-report.webp" width="800" height="1035" loading="lazy" alt="Example client report page"><figcaption>An example client report generated from the sheet.</figcaption></figure>
+<figure><img src="img/playbook.webp" width="800" height="1035" loading="lazy" alt="Fix Playbook PDF page"><figcaption>A page from the 21-page Fix Playbook.</figcaption></figure>
+</div>
+</section>
+
+<section class="card"><h2>How it works</h2>
+<ol>
+<li>Import the workbook into Google Sheets and paste in the script. Setup takes about 10 minutes and the README walks you through it.</li>
+<li>Add a free Google API key.</li>
+<li>List your URLs, then click <strong>CWV Audit → Run audit</strong>. Tests usually take under a minute per URL (slow sites can take several), up to 20 run in parallel, and long lists resume automatically.</li>
+<li>Read pass and fail on CWV Live, work the checklist, then click <strong>Build client report</strong>.</li>
+</ol>
+<p>The example rows in the kit come from a real audit of 10 well-known public websites run on 27 Oct 2026. Only 40% of their mobile pages passed all three Core Web Vitals. Clear them with one click and run your own.</p>
+</section>
+
+<section class="card"><h2>Who it's for</h2>
+<ul>
+<li>SEO freelancers and agencies who need a repeatable audit and a report clients can read.</li>
+<li>In-house SEOs and developers who want field data and a prioritised fix list in one place.</li>
+<li>Site owners who failed Core Web Vitals in Search Console and want to know why.</li>
+</ul>
+<p>Need hundreds of URLs or a whole sitemap? The kit can import results from our <a href="https://apify.com/tobbyb/pagespeed-core-web-vitals-monitor">PageSpeed &amp; Core Web Vitals Monitor on Apify</a>. Just want to check one page? Use the <a href="/">free Core Web Vitals checker</a>.</p>
+</section>
+
+<section class="card" id="pricing"><h2>Pricing</h2>
+<div class="price"><span class="amt">$29</span><span>One person, unlimited sites, client work allowed. Free v1.x updates. 30-day refund if it doesn't work for you.</span>
+<a class="cta" href="https://tobbytools.gumroad.com/l/kzrcvu">Buy on Gumroad</a></div>
+<p>Only need the checklist? The <a href="https://tobbytools.gumroad.com/l/crbfld">191-check Technical SEO + Core Web Vitals Checklist</a> is pay what you want, from $5.</p>
+</section>
+
+<section class="card"><h2>FAQ</h2>
+<details><summary>Do I need to code?</summary><p>No. You paste the script once and use the menu after that.</p></details>
+<details><summary>Does it cost anything to run?</summary><p>The Google APIs are free with your own key.</p></details>
+<details><summary>Does it work in Excel?</summary><p>The workbook opens in Excel or LibreOffice for viewing and for the checklist. Live audits need Google Sheets.</p></details>
+<details><summary>What about INP and Google's API changes?</summary><p>INP replaced FID as a Core Web Vital in 2024, and the kit treats it as a first-class metric. Field data is read directly from the CrUX API, not from PageSpeed Insights.</p></details>
+<details><summary>Can I get a refund?</summary><p>Yes. If the kit doesn't work for you within 30 days, ask for a refund through Gumroad.</p></details>
+</section>
+</main>
+<footer><div class="wrap">© 2026 Tobby Tools, Toronto. This site sets no cookies. · <a href="/">Free Core Web Vitals checker</a> · <a href="https://tobbytools.gumroad.com/">Gumroad store</a></div></footer>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Product","name":"Core Web Vitals Audit Kit for Google Sheets","description":"Google Sheets kit with live PageSpeed and CrUX Core Web Vitals audits, a 191-check technical SEO checklist, fix tickets, a client report generator and a 21-page fix playbook.","image":"https://tobbytools.github.io/core-web-vitals-audit-kit/img/og.jpg","brand":{"@type":"Brand","name":"Tobby Tools"},"offers":{"@type":"Offer","price":"29","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://tobbytools.gumroad.com/l/kzrcvu"}}
+</script>
+</body>
+</html>
