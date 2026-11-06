@@ -9,6 +9,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const rate=(k,v)=>v<=T[k][0]?'good':v<=T[k][1]?'ni':'poor';
 const LBL={good:'Good',ni:'Needs improvement',poor:'Poor'};
 const fmt=(k,v)=>k==='CLS'?v.toFixed(2):k==='LCP'?(v/1000).toFixed(1)+' s':Math.round(v)+' ms';
+function track(name){try{if(typeof window.tobbyTrack==='function')window.tobbyTrack(name)}catch(e){}}
 let busy=false,timer;
 function norm(s){s=s.trim();if(!s)return null;if(!/^https?:\/\//i.test(s))s='https://'+s;
  try{const u=new URL(s);if(!/^https?:$/.test(u.protocol)||!u.hostname.includes('.')||/\s/.test(s))return null;return u.href}catch(e){return null}}
@@ -16,7 +17,7 @@ function status(html,cls){const el=$('status');el.className='card '+(cls||'');el
 function getKey(){try{return localStorage.getItem('psiKey')||''}catch(e){return ''}}
 function keyForm(){return `<form class="key" id="kf"><label for="k" class="sr">Your PageSpeed Insights API key</label><input id="k" autocomplete="off" placeholder="Optional: paste your own free PSI API key"><button type="submit">Save key &amp; retry</button></form><p class="dist">Get a free key at <a href="https://developers.google.com/speed/docs/insights/v5/get-started">developers.google.com</a>. It is stored only in this browser.</p>`}
 async function run(url){
- if(busy)return;busy=true;$('go').disabled=true;$('results').hidden=true;
+ if(busy)return;busy=true;track('checker_start');$('go').disabled=true;$('results').hidden=true;
  const t0=Date.now();
  status(`<strong>Testing ${esc(url)}…</strong><div class="progress" role="progressbar" aria-label="Test progress"><span id="pb"></span></div><p class="dist" id="pt">Loading the page in Lighthouse. This usually takes 20–60 seconds.</p>`);
  const steps=[[0,'Requesting the test from PageSpeed Insights…'],[4,'Loading the page on a simulated mobile device…'],[15,'Measuring loading, layout shifts and blocking time…'],[30,'Running SEO audits…'],[45,'Slow page – still working, hang tight…']];
@@ -28,12 +29,13 @@ async function run(url){
  try{
   const r=await fetch(API+'?'+q,{signal:ctl.signal});let d={};try{d=await r.json()}catch(e){}
   if(!r.ok){const m=(d.error&&d.error.message)||('HTTP '+r.status);
-   if(r.status===429)return status(`<div class="err"><strong>Google's free test limit was hit.</strong><p>PageSpeed Insights is rate-limiting free requests right now. Wait a minute and try again, or use your own free API key.</p>${keyForm()}</div>`);
-   if(r.status===400&&/key/i.test(m))return status(`<div class="err"><strong>That API key was rejected.</strong>${keyForm()}</div>`);
+   if(r.status===429){track('checker_error_rate_limit');return status(`<div class="err"><strong>Google's free test limit was hit.</strong><p>PageSpeed Insights is rate-limiting free requests right now. Wait a minute and try again, or use your own free API key.</p>${keyForm()}</div>`)}
+   if(r.status===400&&/key/i.test(m)){track('checker_error_key_rejected');return status(`<div class="err"><strong>That API key was rejected.</strong>${keyForm()}</div>`)}
    const unreachable=/FAILED_DOCUMENT_REQUEST|ERRORED_DOCUMENT_REQUEST|DNS|NO_FCP|unable to process/i.test(m);
+   track(unreachable?'checker_error_unreachable':'checker_error_test_failed');
    return status(`<div class="err"><strong>${unreachable?'Lighthouse could not load that page.':'The test failed.'}</strong><p>${unreachable?'Check the URL is public, spelled correctly and returns a page (not a login wall or error).':'Please try again in a moment.'}</p><p class="dist">Details: ${esc(m.slice(0,300))}</p></div>`)}
-  render(url,d);$('status').hidden=true;
- }catch(e){status(`<div class="err"><strong>${e.name==='AbortError'?'The test took over 2 minutes and was stopped.':'Network error.'}</strong><p>Please check your connection and try again.</p></div>`)}
+  render(url,d);track('checker_success');$('status').hidden=true;
+ }catch(e){track(e.name==='AbortError'?'checker_error_timeout':'checker_error_network');status(`<div class="err"><strong>${e.name==='AbortError'?'The test took over 2 minutes and was stopped.':'Network error.'}</strong><p>Please check your connection and try again.</p></div>`)}
  finally{clearInterval(timer);clearTimeout(to);busy=false;$('go').disabled=false;bindKey(url)}
 }
 function bindKey(url){const kf=$('kf');if(!kf)return;kf.onsubmit=e=>{e.preventDefault();const v=$('k').value.trim();try{v?localStorage.setItem('psiKey',v):localStorage.removeItem('psiKey')}catch(x){}run(url)}}
@@ -65,7 +67,7 @@ function render(url,d){
  $('results').hidden=false;$('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
 $('f').addEventListener('submit',e=>{e.preventDefault();const u=norm($('u').value);
- if(!u){status('<div class="err"><strong>That doesn\'t look like a valid URL.</strong><p>Enter a full web address, e.g. https://example.com/page</p></div>');$('u').focus();return}
+ if(!u){track('checker_error_invalid_url');status('<div class="err"><strong>That doesn\'t look like a valid URL.</strong><p>Enter a full web address, e.g. https://example.com/page</p></div>');$('u').focus();return}
  $('u').value=u;history.replaceState(null,'','?url='+encodeURIComponent(u));run(u)});
 const p=new URLSearchParams(location.search).get('url');if(p){const u=norm(p);if(u){$('u').value=u;run(u)}}
 })();

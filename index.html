@@ -70,7 +70,7 @@ ul.checks li:first-child{border-top:0}
 .checks .d{color:var(--mut);font-size:.88rem}
 .progress{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin:12px 0}
 .progress span{display:block;height:100%;width:0;background:var(--acc);transition:width .9s linear}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:14px}
 .prod{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column}
 .prod h3{margin:0 0 6px;font-size:1.05rem}.prod p{margin:0 0 12px;color:var(--mut);font-size:.92rem;flex:1}
 .btn{display:inline-block;text-align:center;font-weight:700;text-decoration:none;padding:10px 16px;border-radius:9px;background:var(--brand);color:#fff}
@@ -80,7 +80,7 @@ ul.checks li:first-child{border-top:0}
 .tools a span{display:block;color:var(--mut);font-size:.88rem}
 .tools a:hover{border-color:var(--acc)}
 article h2{font-size:1.45rem;margin:28px 0 8px}article h3{font-size:1.1rem;margin:20px 0 4px}
-table{width:100%;border-collapse:collapse;font-size:.93rem}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:.93rem;table-layout:fixed}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
 details{border-top:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:700}
 footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -112,10 +112,10 @@ footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
  <section class="card" aria-labelledby="h-seo"><h2 id="h-seo">SEO checks</h2>
   <p class="sub">From Lighthouse's SEO audits for this URL.</p><ul class="checks" id="seo"></ul></section>
  <section class="card" aria-labelledby="h-fix"><h2 id="h-fix">Fix what this found</h2>
-  <p class="sub">Two tools from us for going from "it failed" to a fixed site.</p>
+  <p class="sub">Two different tools. The checklist is a list you complete yourself. The audit kit is a Google Sheet that runs the audits.</p>
   <div class="products">
-   <div class="prod"><h3>Technical SEO + Core Web Vitals Checklist</h3><p>191 checks across 19 categories, as a spreadsheet plus a 17-page PDF. Pay what you want, from $5.</p><a class="btn" href="https://tobbytools.gumroad.com/l/crbfld">Get the checklist – $5+</a></div>
-   <div class="prod"><h3>CWV Audit Kit (Google Sheets)</h3><p>Paste your URLs into a Google Sheet and click Run. It pulls PageSpeed lab and CrUX real-user data, tracks a 25-week field trend, and includes the 191-check checklist, fix tickets, a 21-page fix playbook and a client report template.</p><a class="btn" href="/core-web-vitals-audit-kit/">See the audit kit – $29</a></div>
+   <div class="prod"><h3>Technical SEO + Core Web Vitals Checklist</h3><p>191 checks across 19 categories, as a spreadsheet plus a 17-page PDF. It does not run PageSpeed or CrUX. Pay what you want, from $5 USD.</p><a class="btn" href="https://tobbytools.gumroad.com/l/crbfld">Get the checklist – $5 USD</a></div>
+   <div class="prod"><h3>CWV Audit Kit (Google Sheets)</h3><p>$29 USD, one-time. It includes the 191-check checklist, and adds a Google Sheet that pulls PageSpeed lab and CrUX real-user data, a 25-week field trend, fix tickets, a 21-page fix playbook and a client report template.</p><a class="btn" data-track="kit_cta_checker_results" href="/core-web-vitals-audit-kit/">See the audit kit – $29 USD</a></div>
   </div></section>
 </div>
 
@@ -178,6 +178,8 @@ footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
 {"@type":"Question","name":"I see a \"rate limit\" error. What now?","acceptedAnswer":{"@type":"Answer","text":"Google limits how many free PageSpeed tests can run. Wait a minute and try again, or paste your own free PageSpeed Insights API key when prompted; it is kept only in your browser."}}
 ]}]}
 </script>
+<script src="/analytics-config.js" defer></script>
+<script src="/analytics.js" defer></script>
 <script src="/app.js" defer></script>
 </body>
 </html>
