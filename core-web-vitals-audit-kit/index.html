@@ -25,9 +25,9 @@ body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,
 a{color:var(--acc)}
 .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
 header.top{background:var(--brand);color:#fff}
-header.top .wrap{display:flex;align-items:center;gap:10px;height:56px}
+header.top .wrap{display:flex;align-items:center;gap:10px 16px;min-height:56px;height:auto;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
 header.top a{color:#fff;text-decoration:none;font-weight:700}
-header.top nav{margin-left:auto;display:flex;gap:16px}header.top nav a{font-weight:500;font-size:.95rem}
+header.top nav{margin-left:auto;display:flex;gap:12px 16px;flex-wrap:wrap}header.top nav a{font-weight:500;font-size:.95rem}
 .hero{background:linear-gradient(180deg,var(--brand),#1e3a8a);color:#fff;padding:40px 0 60px}
 .hero .cols{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
 @media(max-width:820px){.hero .cols{grid-template-columns:1fr}}
@@ -40,8 +40,8 @@ h1{font-size:clamp(1.8rem,4.2vw,2.5rem);line-height:1.15;margin:0 0 12px}
 main{margin-top:-28px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
 .card h2{font-size:1.4rem;margin:0 0 10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-figure{margin:0}figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:18px}
+figure{margin:0;min-width:0}figure img{width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px}
 figcaption{font-size:.88rem;color:var(--mut);margin-top:6px}
 ol li,ul li{margin-bottom:6px}
 details{border-top:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:700}
@@ -56,9 +56,9 @@ footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
 <section class="hero"><div class="wrap cols">
 <div>
 <h1>Core Web Vitals Audit Kit for Google Sheets</h1>
-<p>Audit Core Web Vitals and technical SEO in about 15 minutes, inside Google Sheets. Paste your URLs and click Run: the sheet pulls Lighthouse lab results and real-user Chrome data (LCP, INP, CLS) for every page, flags what fails, and gives you the fix plus a client-ready report.</p>
-<a class="cta" href="https://tobbytools.gumroad.com/l/kzrcvu">Get the kit – $29</a>
-<p class="small">One-time payment, no subscription. Uses your own free Google API key. 30-day refund.</p>
+<p>Audit Core Web Vitals and technical SEO inside Google Sheets. Paste your URLs and click Run: the sheet pulls Lighthouse lab results and real-user Chrome data (LCP, INP, CLS) for every page, flags what fails, and gives you the fix plus a client-ready report.</p>
+<a class="cta" data-track="kit_cta_kit_hero" href="https://tobbytools.gumroad.com/l/kzrcvu">Get the kit – $29 USD</a>
+<p class="small">$29 USD, one-time. Uses your own free Google API key. 30-day refund.</p>
 </div>
 <img src="img/cover.webp" width="1280" height="720" alt="Core Web Vitals Audit Kit: Google Sheets workbook with live PageSpeed and CrUX results">
 </div></section>
@@ -111,9 +111,9 @@ footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
 </section>
 
 <section class="card" id="pricing"><h2>Pricing</h2>
-<div class="price"><span class="amt">$29</span><span>One person, unlimited sites, client work allowed. Free v1.x updates. 30-day refund if it doesn't work for you.</span>
-<a class="cta" href="https://tobbytools.gumroad.com/l/kzrcvu">Buy on Gumroad</a></div>
-<p>Only need the checklist? The <a href="https://tobbytools.gumroad.com/l/crbfld">191-check Technical SEO + Core Web Vitals Checklist</a> is pay what you want, from $5.</p>
+<div class="price"><span class="amt">$29 USD</span><span>One person, unlimited sites, client work allowed. Free v1.x updates. 30-day refund if it doesn't work for you.</span>
+<a class="cta" data-track="kit_cta_kit_pricing" href="https://tobbytools.gumroad.com/l/kzrcvu">Buy the kit – $29 USD</a></div>
+<p>The <a href="https://tobbytools.gumroad.com/l/crbfld">191-check Technical SEO + Core Web Vitals Checklist</a> is the spreadsheet and 17-page PDF on their own. Pay what you want, from $5 USD. The $29 USD kit adds the live PageSpeed and CrUX sheet, the 25-week trend, fix tickets, the playbook and the client report.</p>
 </section>
 
 <section class="card"><h2>FAQ</h2>
@@ -125,6 +125,8 @@ footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
 </section>
 </main>
 <footer><div class="wrap">© 2026 Tobby Tools, Toronto. This site sets no cookies. · <a href="/">Free Core Web Vitals checker</a> · <a href="https://tobbytools.gumroad.com/">Gumroad store</a></div></footer>
+<script src="/analytics-config.js" defer></script>
+<script src="/analytics.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":"Core Web Vitals Audit Kit for Google Sheets","description":"Google Sheets kit with live PageSpeed and CrUX Core Web Vitals audits, a 191-check technical SEO checklist, fix tickets, a client report generator and a 21-page fix playbook.","image":"https://tobbytools.github.io/core-web-vitals-audit-kit/img/og.jpg","brand":{"@type":"Brand","name":"Tobby Tools"},"offers":{"@type":"Offer","price":"29","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://tobbytools.gumroad.com/l/kzrcvu"}}
 </script>
