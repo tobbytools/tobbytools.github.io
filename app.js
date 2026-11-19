@@ -63,9 +63,56 @@ function render(url,d){
  $('seo').innerHTML=(seo!=null?`<li><span class="ico ${seo>=90?'pass':'fail'}">${seo}</span><div><strong>Lighthouse SEO score: ${seo}/100</strong></div></li>`:'')+seoIds.filter(x=>a[x[0]]).map(([id,lbl])=>{const au=a[id];const s=au.score;const na=s==null||au.scoreDisplayMode==='notApplicable'||au.scoreDisplayMode==='manual';const ok=s===1;
   return `<li><span class="ico ${na?'na':ok?'pass':'fail'}" aria-hidden="true">${na?'–':ok?'✓':'!'}</span><div><strong>${esc(lbl)}</strong> <span class="pill ${na?'na':ok?'good':'poor'}">${na?'Not applicable':ok?'Pass':'Fail'}</span><div class="d">${esc(au.title)}${au.explanation?' – '+esc(au.explanation):''}</div></div></li>`}).join('');
  $('results').hidden=false;$('results').scrollIntoView({behavior:'smooth',block:'start'});
+ showWatch(url);
 }
 $('f').addEventListener('submit',e=>{e.preventDefault();const u=norm($('u').value);
  if(!u){status('<div class="err"><strong>That doesn\'t look like a valid URL.</strong><p>Enter a full web address, e.g. https://example.com/page</p></div>');$('u').focus();return}
  $('u').value=u;history.replaceState(null,'','?url='+encodeURIComponent(u));run(u)});
 const p=new URLSearchParams(location.search).get('url');if(p){const u=norm(p);if(u){$('u').value=u;run(u)}}
+
+function showWatch(url){
+ const site=$('watch-site'),wf=$('wf'),st=$('watch-status');
+ if(site&&url)site.value=url;
+ if(wf)wf.hidden=false;
+ if(st){delete st.dataset.ok;st.textContent="No account. We'll only email you about this waitlist."}
+}
+function validEmail(s){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)}
+function watchMailto(email,site){
+ const body='Email: '+email+'\nURL: '+site+'\nHow often: weekly';
+ return 'mailto:tobbytools.dev@gmail.com?subject='+encodeURIComponent('Watch my site')+'&body='+encodeURIComponent(body)
+}
+const wf=$('wf');
+if(wf)wf.addEventListener('submit',async e=>{
+ e.preventDefault();
+ const email=$('watch-email').value.trim();
+ const raw=$('watch-site').value;
+ const st=$('watch-status');
+ const btn=$('watch-go');
+ const honey=wf.querySelector('[name="_honey"]');
+ if(honey&&honey.value){st.textContent="Thanks. You're on the waitlist.";return}
+ if(!validEmail(email)){st.textContent='Please enter a valid email address.';$('watch-email').focus();return}
+ const u=norm(raw);
+ if(!u){st.textContent="That doesn't look like a valid URL.";$('watch-site').focus();return}
+ $('watch-site').value=u;
+ btn.disabled=true;
+ st.textContent='Sending…';
+ const body=new FormData();
+ body.set('email',email);
+ body.set('site',u);
+ body.set('_subject','Watch my site');
+ body.set('_template','table');
+ body.set('_captcha','false');
+ body.set('source','cwv-checker-waitlist');
+ try{
+  const r=await fetch('https://formsubmit.co/ajax/tobbytools.dev@gmail.com',{method:'POST',headers:{Accept:'application/json'},body});
+  const d=await r.json().catch(()=>({}));
+  const ok=r.ok&&(d.success===true||d.success==='true'||/sent|success|email/i.test(JSON.stringify(d)));
+  if(!ok)throw new Error('submit failed');
+  st.dataset.ok='1';
+  st.textContent="Thanks. You're on the waitlist. We'll only email you about this monitor.";
+  wf.hidden=true;
+ }catch(err){
+  st.innerHTML='We couldn\'t send that from the page. <a href="'+watchMailto(email,u)+'">Email us instead</a> and we\'ll add you.';
+ }finally{btn.disabled=false}
+});
 })();
