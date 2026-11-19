@@ -104,9 +104,9 @@ if(wf)wf.addEventListener('submit',async e=>{
  body.set('_captcha','false');
  body.set('source','cwv-checker-waitlist');
  try{
-  const r=await fetch('https://formsubmit.co/ajax/tobbytools.dev@gmail.com',{method:'POST',headers:{Accept:'application/json'},body});
+  const r=await fetch('https://formsubmit.co/ajax/f3a1cede1c7303b6d4f838335a5035d9',{method:'POST',headers:{Accept:'application/json'},body});
   const d=await r.json().catch(()=>({}));
-  const ok=r.ok&&(d.success===true||d.success==='true'||/sent|success|email/i.test(JSON.stringify(d)));
+  const ok=r.ok&&(d.success===true||d.success==='true');
   if(!ok)throw new Error('submit failed');
   st.dataset.ok='1';
   st.textContent="Thanks. You're on the waitlist. We'll only email you about this monitor.";
