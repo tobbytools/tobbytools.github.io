@@ -86,6 +86,12 @@ footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .key{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}.key input{flex:1 1 260px;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit}
 .key button{padding:10px 16px}
+.watch-note{font-size:.85rem;color:var(--mut);margin:10px 0 0}
+form.watch{display:grid;gap:10px;max-width:520px}
+form.watch label{font-weight:600;font-size:.92rem}
+form.watch input[type=email],form.watch input[type=url]{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:10px}
+form.watch input:focus{outline:3px solid #fbbf24;outline-offset:1px}
+form.watch button{justify-self:start}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -111,6 +117,19 @@ footer{color:var(--mut);font-size:.85rem;padding:24px 0 40px}
   <p class="sub">A single simulated load on a mid-range phone with throttled network. Good for debugging; Google ranks on the real-user data above.</p><div id="lab"></div></section>
  <section class="card" aria-labelledby="h-seo"><h2 id="h-seo">SEO checks</h2>
   <p class="sub">From Lighthouse's SEO audits for this URL.</p><ul class="checks" id="seo"></ul></section>
+ <section class="card" id="watch" aria-labelledby="h-watch">
+  <h2 id="h-watch">Want this checked every week?</h2>
+  <p class="sub">This is an early-access waitlist for a monitor we&#39;re testing: a weekly Core Web Vitals check of your site, with an email only if LCP, INP or CLS gets worse. It isn&#39;t a live service yet. Leave your email and the site to watch, and we&#39;ll email you if a free early-tester version opens.</p>
+  <form class="watch" id="wf" novalidate>
+   <input type="text" name="_honey" class="sr" tabindex="-1" autocomplete="off" aria-hidden="true">
+   <label for="watch-email">Your email</label>
+   <input id="watch-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com">
+   <label for="watch-site">Site to watch</label>
+   <input id="watch-site" name="site" type="url" autocomplete="url" inputmode="url" required placeholder="https://example.com">
+   <button id="watch-go" type="submit">Watch my site</button>
+  </form>
+  <p class="watch-note" id="watch-status">No account. We&#39;ll only email you about this waitlist.</p>
+ </section>
  <section class="card" aria-labelledby="h-fix"><h2 id="h-fix">Fix what this found</h2>
   <p class="sub">Two tools from us for going from "it failed" to a fixed site.</p>
   <div class="products">
